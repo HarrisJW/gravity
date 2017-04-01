@@ -5,13 +5,13 @@ package dal.gravity;
  */
 public abstract class AbstractPendulum {
 
-
     /* instance variables - string length, point mass, angular displacement
      * at t=0, constant for local gravitational field in m/s^2 (e.g., 9.81 on Earth)
      */
+	
     private double stringLength, pointMass;
     protected double theta0; 
-    protected double g = 9.80665; 
+    protected GravityModel g;
 
     /**
      * Creates a new Pendulum instance using
@@ -20,7 +20,7 @@ public abstract class AbstractPendulum {
      * inTheta0: angular displacement at t=0 (0<=theta0)
      * inG: gravitational field value to use
      */
-    public AbstractPendulum (double inLength, double inMass, double inTheta0) {
+    public AbstractPendulum (double inLength, double inMass, double inTheta0, GravityModel inG) {
 	if (validStringLength (inLength)) stringLength = inLength;
 	else throw new IllegalArgumentException ("invalid string length: " + inLength);
 	if (validPointMass(inMass)) pointMass = inMass;
@@ -28,6 +28,9 @@ public abstract class AbstractPendulum {
 	if (validDisplacement (inTheta0)) theta0 = inTheta0;
 	else throw new IllegalArgumentException 
 		 ("invalid angular displacement: " + inTheta0);
+	
+	// Dynamic assignment of gravity model.
+	g=inG;
 
     }
 
@@ -41,6 +44,12 @@ public abstract class AbstractPendulum {
 
     public double getStringLength () { return stringLength; }
 
-    public double getGravitationalField () { return g; }
+    // *********** Modified this. *********************************************************************
+    public double getGravitationalField () { return g.getGravitationalField(); }
+    // ************************************************************************************************
+    
+    // *********** Added this. ************************************************************************
+    public void setGravitationalField(GravityModel newGravitationalField){ g = newGravitationalField; }
+    // ************************************************************************************************
 
 }
