@@ -3,7 +3,7 @@ package dal.gravity;
 /**
  * Represents pendulums exhibiting (approximately) simple harmonic motion
  */
-public class SimplePendulum extends AbstractEarthPendulum {
+public class SimplePendulum extends AbstractPendulum {
 
     private double angularFrequency, periodOfMotion;
 
